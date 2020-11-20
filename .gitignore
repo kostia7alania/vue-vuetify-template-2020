@@ -1,23 +1,37 @@
+# OS Files
 .DS_Store
-node_modules
-/dist
+Thumbs.db
 
+# Dependencies
+node_modules/
 
-# local env files
+# Dev/Build Artifacts
+/dist/
+/tests/e2e/videos/
+/tests/e2e/screenshots/
+/tests/unit/coverage/
+jsconfig.json
+/tests/e2e/reports/
+selenium-debug.log
+chromedriver.log
+geckodriver.log
+
+# Local Env Files
 .env.local
 .env.*.local
 
-# Log files
+# Log Files
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+package-lock.json
+yarn.lock
 
-# Editor directories and files
+# Unconfigured Editors
 .idea
-.vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.sw*
