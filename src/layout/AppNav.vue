@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app clipped>
+  <v-navigation-drawer v-model="isShownMenuModel" app clipped>
     <v-list dense>
       <v-list-item v-for="item in items" :key="item.text" link>
         <v-list-item-action>
@@ -35,8 +35,15 @@
     </v-list>
   </v-navigation-drawer>
 </template>
+
 <script>
 export default {
+  props: {
+    isShownMenu: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       items: [
@@ -54,6 +61,16 @@ export default {
         { picture: 78, text: 'MKBHD' },
       ],
     }
+  },
+  computed: {
+    isShownMenuModel: {
+      get() {
+        return this.isShownMenu
+      },
+      set(value) {
+        this.$emit('set-is-shown-menu', value)
+      },
+    },
   },
 }
 </script>
