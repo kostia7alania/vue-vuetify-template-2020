@@ -1,5 +1,4 @@
 /* VIEWS */
-
 const MainView = () => import(/* webpackChunkName: "MainView" */ '@/views/MainView')
 const AuthView = () => import(/* webpackChunkName: "AuthView" */ '@/views/AuthView')
 
