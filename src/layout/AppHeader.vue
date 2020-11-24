@@ -18,13 +18,36 @@
 
     <v-spacer />
 
-    <v-btn text rouded :to="{ name: 'main' }">Главная</v-btn>
-    <v-btn text rouded :to="{ name: 'auth' }">Вход</v-btn>
+    <v-btn v-for="link in links" :key="link.title" exact text rouded :to="{ name: link.routeName }">
+      <v-icon left>{{ link.icon }}</v-icon>
+      {{ link.title }}
+    </v-btn>
   </v-app-bar>
 </template>
 
 <script>
 export default {
   name: 'AppHeader',
+  data() {
+    return {
+      links: [
+        {
+          title: 'Главная',
+          routeName: 'main',
+          icon: 'mdi-home',
+        },
+        {
+          title: 'Калькулятор',
+          routeName: 'calc',
+          icon: 'mdi-calculator ',
+        },
+        {
+          title: 'Вход',
+          routeName: 'auth',
+          icon: 'mdi-login',
+        },
+      ],
+    }
+  },
 }
 </script>
