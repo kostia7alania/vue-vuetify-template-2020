@@ -1,12 +1,16 @@
 <template>
   <section>
-    <VueDadata :token="constants.dadata" :on-change="onChange" />
+    <VueDadata placeholder="Введите адрес" :token="constants.dadata" :query="query" :on-change="onChange" />
     <div v-if="Object.keys(form.data).length">
-      <div>Страна: {{ form.data.country }}</div>
-      <div>Город: {{ form.data.city }}</div>
-      <div>Улица: {{ form.data.street }}</div>
-      <div>Дом: {{ form.data.house }}</div>
-      <v-alert v-if="validMessage" border="top" color="red lighten-2" dark>{{ validMessage }}</v-alert>
+      <v-subheader v-if="validMessage" class="color-red">
+        {{ validMessage }}
+      </v-subheader>
+      <div>
+        <div :class="{ 'color-red': !form.data.country }">Страна: {{ form.data.country }}</div>
+        <div :class="{ 'color-red': !form.data.city }">Город: {{ form.data.city }}</div>
+        <div :class="{ 'color-red': !form.data.street }">Улица: {{ form.data.street }}</div>
+        <div :class="{ 'color-red': !form.data.house }">Дом: {{ form.data.house }}</div>
+      </div>
     </div>
   </section>
 </template>
@@ -18,6 +22,12 @@ export default {
   name: 'Dadata',
   components: {
     VueDadata: () => import(/* ebpackChunkName: "vue-dadata" */ 'vue-dadata'),
+  },
+  props: {
+    query: {
+      type: Object,
+      default: undefined,
+    },
   },
   data() {
     return {
@@ -56,11 +66,11 @@ export default {
   },
   methods: {
     onChange(form) {
-      console.log({ ...form.data })
+      console.log({ ...form, data: { ...form.data } })
       this.form = form
-      if (this.validMessage) {
-        this.$emit('input', form)
-      }
+      this.form.isValid = !this.validMessage
+
+      this.$emit('input', this.form)
     },
   },
 }
@@ -69,5 +79,8 @@ export default {
 <style lang="scss" scoped>
 ::v-deep .vue-dadata__input {
   min-width: 300px;
+}
+.color-red {
+  color: red;
 }
 </style>
