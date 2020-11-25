@@ -2,20 +2,23 @@
   <v-container class="fill-height">
     <v-row justify="center" align="center">
       <div class="text-center">
-        <h1 class="title">Простой калькулятор</h1>
+        <h1 class="title">
+          Простой калькулятор
+          <span v-if="isLoading">[ЗАГРУЗКА]</span>
+        </h1>
       </div>
     </v-row>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" @submit.prevent="getCalc">
       <v-form>
         <v-col>
           <v-row>
             <v-col>
               Адрес отправления
-              <Dadata v-model="form.source_address" />
+              <Dadata v-model="form.shipping_address" />
             </v-col>
             <v-col>
               Адрес доставки
-              <Dadata v-model="form.destination_address" />
+              <Dadata v-model="form.destination_address" @set-coordinats="form.coordinats = $event" />
             </v-col>
           </v-row>
 
@@ -55,7 +58,7 @@
           <v-row>
             <v-col cols="12">
               Номенклатура ({{ form.nomenclatures.length }})
-              <v-btn rounded text @click="form.nomenclatures.push({ key: +new Date() })">
+              <v-btn rounded text @click="addNomenclature">
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </v-col>
@@ -63,7 +66,8 @@
           <v-row v-for="(nomenclature, i) in form.nomenclatures" :key="nomenclature.key">
             <Nomenclature
               :nomenclature="nomenclature"
-              @set-nomenclature="form.nomenclatures[i] = $event"
+              @set-nomenclature="setNomenclature(i, $event)"
+              @add-place="addPlace(i)"
               @delete="form.nomenclatures.splice(i, 1)"
             />
           </v-row>
@@ -80,7 +84,7 @@
             />
           </div>
           <div>
-            <v-select :items="deliveryTypesArr" label="Тип доставки" />
+            <v-select v-model="form.delivery_type" :items="deliveryTypesArr" label="Тип доставки" />
           </div>
           <div>
             <div>
@@ -100,6 +104,7 @@
 <script>
 import dayjs from '@/setups/dayjs'
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker'
+import { mapActions } from 'vuex'
 
 // // Main JS (in UMD format)
 // import VueTimepicker from 'vue2-timepicker'
@@ -124,49 +129,49 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       deliveryTypesArr: deliveryTypes.map(e => e.title),
 
       form: {
         client_id: this.$route.query.id,
-        shipping_address: '2-я Миусская ул., д. 1, Москва',
-        destination_address: 'Крымский пер., 119, Оренбург, Оренбургская обл',
+        // shipping_address: '2-я Миусская ул., д. 1, Москва',
+        // destination_address: 'Крымский пер., 119, Оренбург, Оренбургская обл',
         coordinats: {
-          geo_lat: '42.9849159',
-          geo_lon: '47.5047181',
+          // @awaiting for API
+          // geo_lat: '42.9849159',
+          // geo_lon: '47.5047181',
         },
         is_acquiring: null,
         delivery_date: '',
 
         interval_slots: [
           {
-            from: '10:00',
-            to: '14:00',
+            // from: '10:00',
+            // to: '14:00',
           },
         ],
-        pack: [],
 
         nomenclatures: [
           // unlimite
-          {
-            key: +new Date(), // for key
-            name: 'Телевизор samsung',
-            places: [
-              // limit: 10
-              {
-                weight: 4,
-                dimensions: {
-                  length: 170.1,
-                  width: 60.1,
-                  height: 45.1,
-                },
-              },
-            ],
-          },
+          // {
+          //   key: +new Date(), // for key
+          //   name: 'Телевизор samsung',
+          //   places: [
+          //     // limit: 10
+          //     {
+          //       weight: 4,
+          //       dimensions: {
+          //         length: 170.1,
+          //         width: 60.1,
+          //         height: 45.1,
+          //       },
+          //     },
+          //   ],
+          // },
         ],
         additional_services: 0,
         declared_order_value: 0,
         delivery_type: 1,
-        region_kladr_id: '7700000000000',
       },
       lastTimeSlot: 18, // after 18:00 - you can ship only for tomorrow
       rules: {
@@ -183,7 +188,7 @@ export default {
   },
   computed: {
     isValidForm() {
-      const { source_address: from = {}, destination_address: to = {}, declared_order_value: price } = this.form
+      const { shipping_address: from = {}, destination_address: to = {}, declared_order_value: price } = this.form
       return from.isValid && to.isValid && !Number.isNaN(parseInt(price, 10))
     },
     computedDateFormatted() {
@@ -241,6 +246,7 @@ export default {
     this.init()
   },
   methods: {
+    ...mapActions('calc', ['GET_CALC']),
     init() {
       if (this.isTodayAndAfterLastTimeSlot) {
         // после 18 - незя!
@@ -266,6 +272,29 @@ export default {
     dateChangeWatcher() {
       // const [times] = this.times
       // this.form.time = times
+    },
+    addNomenclature() {
+      this.form.nomenclatures.push({ key: +new Date(), places: [] })
+    },
+    setNomenclature(i, $event) {
+      console.log(i, $event)
+      this.form.nomenclatures[i] = $event
+    },
+    addPlace(i) {
+      const nomenclature = this.form.nomenclatures[i]
+      nomenclature.places.push({ key: +new Date(), dimensions: {} })
+    },
+    async getCalc() {
+      const form = JSON.parse(JSON.stringify(this.form))
+      form.delivery_type = deliveryTypes.find(e => (e.title = form.delivery_type))?.value || form.delivery_type
+      this.isLoading = true
+      try {
+        await this.GET_CALC(form)
+      } catch (err) {
+        this.alert('error')
+      } finally {
+        this.isLoading = false
+      }
     },
   },
 }

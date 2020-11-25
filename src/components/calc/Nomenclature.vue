@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="6">
-        <v-text-field v-model="nameModel" label="Имя" outlined />
+        <v-text-field v-model="nomenclature.name" label="Имя" outlined />
       </v-col>
       <v-col cols="6">
         <v-btn text rounded @click="$emit('delete')">
@@ -11,7 +11,18 @@
       </v-col>
     </v-row>
     <v-row>
-      <NomenclaturePlace v-for="place in nomenclature.places" :key="place.key" :place="place" />
+      Мест в номенклатуре ({{ nomenclature.places.length }})
+      <v-btn rounded text @click="$emit('add-place')">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+      <NomenclaturePlace
+        v-for="(place, i) in nomenclature.places"
+        :key="i"
+        class="place"
+        :place="place"
+        @delete="deletePlace(i)"
+        @set-place="setPlace(i, $event)"
+      />
     </v-row>
   </v-container>
 </template>
@@ -44,5 +55,26 @@ export default {
       default: () => ({}),
     },
   },
+  methods: {
+    setNomenclature(nomenclature) {
+      this.$emit('set-nomenclature', nomenclature)
+    },
+    deletePlace(i) {
+      const { nomenclature } = this
+      nomenclature.places.splice(i, 1)
+      this.setNomenclature(nomenclature)
+    },
+    setPlace(i, $event) {
+      this.nomenclature.places[i] = $event
+      this.setNomenclature(this.nomenclature)
+    },
+  },
 }
 </script>
+
+<style lang="scss" scoped>
+.place {
+  border-left: 1px solid;
+  padding-left: 50px;
+}
+</style>

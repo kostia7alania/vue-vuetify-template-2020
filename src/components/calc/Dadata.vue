@@ -70,7 +70,12 @@ export default {
       this.form = form
       this.form.isValid = !this.validMessage
 
-      this.$emit('input', this.form)
+      this.$emit('input', this.form.unrestricted_value)
+
+      this.$emit('set-coordinats', {
+        geo_lat: form.data.geo_lat,
+        geo_lon: form.data.geo_lon,
+      })
     },
   },
 }

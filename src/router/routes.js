@@ -26,8 +26,8 @@ const routes = [
         name: 'calc',
         component: Calc,
         meta: {
-          menu: { title: 'Калкулятор' },
-          title: 'Калкулятор',
+          menu: { title: 'Калькулятор' },
+          title: 'Калькулятор',
         },
       },
     ],
