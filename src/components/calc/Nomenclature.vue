@@ -2,6 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="6">
+        <!-- eslint-disable-next-line vue/no-mutating-props -->
         <v-text-field v-model="nomenclature.name" label="Имя" outlined />
       </v-col>
       <v-col cols="6">
@@ -65,6 +66,7 @@ export default {
       this.setNomenclature(nomenclature)
     },
     setPlace(i, $event) {
+      // eslint-disable-next-line vue/no-mutating-props
       this.nomenclature.places[i] = $event
       this.setNomenclature(this.nomenclature)
     },

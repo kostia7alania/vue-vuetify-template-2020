@@ -2,6 +2,7 @@ const BACK = process.env.VUE_APP_API // ('10.0.5.154')
 
 const configDev = {
   devServer: {
+    disableHostCheck: true,
     proxy: {
       // all
       '^/api/(.*)$': {

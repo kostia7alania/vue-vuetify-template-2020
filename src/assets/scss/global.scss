@@ -1,0 +1,12 @@
+.isLoading {
+  opacity: 0.5;
+  filter: blur(1px);
+  pointer-events: none;
+  user-select: none;
+}
+
+::selection {
+  background: #ff9900;
+  color: #363642;
+  text-shadow: none;
+}

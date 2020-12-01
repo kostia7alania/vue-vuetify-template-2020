@@ -4,6 +4,7 @@
       <div>
         <v-row>
           <v-col cols="2">
+            <!-- eslint-disable-next-line vue/no-mutating-props -->
             <v-text-field v-model.number="place.weight" type="number" label="Вес" outlined />
           </v-col>
           <v-col cols="3">
@@ -49,6 +50,7 @@ export default {
         return this.place.weight
       },
       set(weight) {
+        // eslint-disable-next-line vue/no-mutating-props
         this.place.weight = weight
         // this.$emit('set-place', { ...this.place, weight })
       },
@@ -58,6 +60,7 @@ export default {
         return this.place.dimensions.length
       },
       set(length) {
+        // eslint-disable-next-line vue/no-mutating-props
         this.place.dimensions.length = length
         // this.$emit('set-place', { ...this.place, dimensions: { ...this.place.dimensions, length } })
       },
@@ -67,6 +70,7 @@ export default {
         return this.place.dimensions.width
       },
       set(width) {
+        // eslint-disable-next-line vue/no-mutating-props
         this.place.dimensions.width = width
         // this.$emit('set-place', { ...this.place, dimensions: { ...this.place.dimensions, width } })
       },
@@ -76,6 +80,7 @@ export default {
         return this.place.dimensions.height
       },
       set(height) {
+        // eslint-disable-next-line vue/no-mutating-props
         this.place.dimensions.height = height
         // this.$emit('set-place', { ...this.place, dimensions: { ...this.place.dimensions, height } })
       },

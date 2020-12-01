@@ -19,7 +19,7 @@ const vuexLocal = new VuexPersistence({
     if (state.auth.TOKEN)
       return {
         auth: state.auth,
-        license: state.license,
+        // license: state.license,
         // dashboard: state.dashboard,
         nav: state.nav,
         settings: state.settings,

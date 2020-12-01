@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 // import store from '@/store/store'
 import routes from '@/router/routes'
 import spinner from '@/setups/spinner'
-import setPageTitle from '@/utils/setPageTitle'
+import i18n from '@/i18n'
 
 Vue.use(VueRouter)
 
@@ -43,8 +43,9 @@ router.beforeResolve((to, from, next) => {
 
 // router.beforeResolve((to, from, next) => { next() })
 
-router.beforeEach((to, from, next) => {
-  setPageTitle(to.meta.title)
+router.beforeEach(async (to, from, next) => {
+  const setPageTitle = (await import(/* webpackChunkName: "setPageTitle" */ '@/utils/setPageTitle')).default
+  setPageTitle(i18n.t(`title.${to.name.replace(/\./g, '_')}`))
   next()
 })
 
