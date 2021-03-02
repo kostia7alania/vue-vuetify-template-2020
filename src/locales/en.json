@@ -1,6 +1,8 @@
 {
   "avatar": "Админ",
-  "buttons": "Buttons",
+  "buttons": {
+    "Save": "Save"
+  },
   "calendar": "Calendar",
   "charts": "Charts",
   "components": "Components",
@@ -48,13 +50,24 @@
   },
   "title": {
     "main": "Main Page",
+    "login": "Login",
+    "register": "Register",
     "calc": "Calc",
     "user_profile": "User Profile",
     "notifications": "Notifications",
     "icons": "Icons",
     "typography": "Typography",
     "tables_regular": "Tables Regular",
-    "maps_google": "Maps Google"
+    "maps_google": "Maps Google",
+    "orders": "Orders",
+    "calc-admin": "Calc Admin",
+    "users": "Users",
+    "dashboard": "Dashboard",
+    "users/add": "Add User",
+    "orders/add": "Add Order",
+    "orders/Show": "Show Order",
+    "orders/edit": "Edit Order",
+    "planner": "Pick-Up & Return"
   },
   "menu": {
     "main": "Main Page",
@@ -64,6 +77,84 @@
     "icons": "Icons",
     "typography": "Typography",
     "tables_regular": "Tables Regular",
-    "maps_google": "Maps Google"
+    "maps_google": "Maps Google",
+    "orders": "Orders",
+    "calc-admin": "Calc Admin",
+    "dashboard": "Dashboard",
+    "users": "Users List",
+    "users/add": "Add User",
+    "users-parent": "Users",
+    "orders-parent": "Orders",
+    "orders/add": "Add Order",
+    "orders/show": "Show Order",
+    "orders/edit": "Edit Order",
+    "planner": "Pick-Up & Return"
+  },
+  "calc": {
+    "Source Address": "Source Address",
+    "Delivery Type": "Delivery Type",
+    "No Data": "No Data",
+    "Destination Address": "Destination Address",
+    "Delivery Date": "Delivery Date",
+    "Today": "Today",
+    "Tomorrow": "Tomorrow",
+    "Delivery Interval": "Delivery Interval",
+    "Places in the Nomenclature": "Places in the Nomenclature",
+    "Declared Order Value": "Declared Order Value",
+    "Add Services": "Add. Services",
+    "Calculate": "Calculate",
+    "No results": "No results",
+    "Category": "Category",
+    "Next Day Delivery": "Next Day Delivery",
+    "First Mile Plus": "First Mile Plus",
+    "First Mile": "First Mile",
+    "Delivery from the Store": "Delivery from the Store",
+    "Same Day Delivery": "Same Day Delivery",
+    "All": "All",
+    "Delivery Zone": "Delivery Zone",
+    "Delivery City": "Delivery City",
+    "Delivery Point": "Delivery Point",
+    "Delivery Service": "Delivery Service",
+    "Recipient Address": "Recipient Address"
+  },
+  "notification": {
+    "You are offline": "You are offline",
+    "Please Log In": "Please Log In",
+    "you are not authorized to view this section": "Уou are not authorized to view this section",
+    "Something Went Wrong": "Something Went Wrong",
+    "User Added": "User Added"
+  },
+  "calc-admin": {
+    "Get Table": "Get Table"
+  },
+  "auth": {
+    "Auth": "Authentication",
+    "Login": "Login",
+    "Password": "Password",
+    "Username": "Username",
+    "Name": "Name",
+    "Surname": "Surname",
+    "Patronymic": "Patronymic",
+    "Forgot password": "Forgot password",
+    "Remembered Password": "Remembered Password",
+    "Password Reset": "Password Reset"
+  },
+  "users": {
+    "Add User": "Add User",
+    "Adding User": "Adding User"
+  },
+  "orders": {
+    "Add Order": "Add Order"
+  },
+  "valid": {
+    "Required field": "Required field"
+  },
+  "planner": {
+    "Pick-Up Address": "Pick-Up Address",
+    "Date": "Date",
+    "Make Plan": "Make Plan"
+  },
+  "retrun": {
+    "Time Interval": "Time Interval"
   }
 }

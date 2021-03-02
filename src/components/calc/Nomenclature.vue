@@ -1,8 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="6">
-        <!-- eslint-disable-next-line vue/no-mutating-props -->
+      <!-- <v-col cols="6">
         <v-text-field v-model="nomenclature.name" label="Имя" outlined />
       </v-col>
       <v-col cols="6">
@@ -11,7 +10,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row> -->
       Мест в номенклатуре ({{ nomenclature.places.length }})
       <v-btn rounded text @click="$emit('add-place')">
         <v-icon>mdi-plus</v-icon>
@@ -22,7 +21,6 @@
         class="place"
         :place="place"
         @delete="deletePlace(i)"
-        @set-place="setPlace(i, $event)"
       />
     </v-row>
   </v-container>

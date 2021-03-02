@@ -23,8 +23,5 @@ export default {
       isShownMenu: false,
     }
   },
-  created() {
-    this.$vuetify.theme.dark = false
-  },
 }
 </script>

@@ -16,11 +16,9 @@ const vuexLocal = new VuexPersistence({
       localeStorageSpace()
     }
 
-    if (state.auth.TOKEN)
+    if (state.auth.LOGIN.token)
       return {
         auth: state.auth,
-        // license: state.license,
-        // dashboard: state.dashboard,
         nav: state.nav,
         settings: state.settings,
         route: state.route, // <== vuex-router-sync

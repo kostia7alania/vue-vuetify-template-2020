@@ -1,4 +1,4 @@
-# Front Example on VUE 2020
+# Front VUE 2020
 
 ## Project setup
 

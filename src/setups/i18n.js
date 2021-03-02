@@ -9,39 +9,44 @@ import ru from 'vuetify/lib/locale/ru'
 
 Vue.use(VueI18n)
 
-function loadLocaleMessages() {
-  const locales = require.context('@/locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)
-  const messages = {}
-  locales.keys().forEach(key => {
-    const matched = key.match(/([A-Za-z0-9-_]+)\./i)
-    if (matched && matched.length > 1) {
-      const locale = matched[1]
-      messages[locale] = locales(key)
-      messages[locale].$vuetify = key === 'en' ? en : ru // @TODO:@REF
-    }
-  })
-  return messages
-}
+// function loadLocaleMessages() {
+//   const locales = require.context('@/locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)
+//   const messages = {}
+//   locales.keys().forEach(key => {
+//     const matched = key.match(/([A-Za-z0-9-_]+)\./i)
+//     if (matched && matched.length > 1) {
+//       const locale = matched[1]
+//       messages[locale] = locales(key)
+//       messages[locale].$vuetify = key === 'en' ? en : ru // @TODO:@REF
+//     }
+//   })
+//   return messages
+// }
 
 const messages = {
-  // en: {
-  //   // eslint-disable-next-line global-require
-  //   ...require('@/locales/en.json'),
-  //   $vuetify: en,
-  // },
-  ...loadLocaleMessages(),
+  en: {
+    // eslint-disable-next-line global-require
+    ...require('@/locales/en.json'),
+    $vuetify: en,
+  },
+  ru: {
+    // eslint-disable-next-line global-require
+    ...require('@/locales/ru.json'),
+    $vuetify: ru,
+  },
+  // ...loadLocaleMessages(),
 }
 
-const { LOCALE } = store.state.settings
+const GET_LOCALE = () => store.state.settings.LOCALE
 
 const i18n = new VueI18n({
-  locale: LOCALE || process.env.VUE_APP_I18N_LOCALE || 'en',
-  fallbackLocale: LOCALE || process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
+  locale: GET_LOCALE() || process.env.VUE_APP_I18N_LOCALE || 'en',
+  fallbackLocale: GET_LOCALE() || process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
   messages,
   // silentTranslationWarn: false,
 })
 
-const loadedLanguages = [LOCALE] // our default language that is preloaded
+const loadedLanguages = [GET_LOCALE()] // our default language that is preloaded
 
 function setI18nLanguage(lang) {
   i18n.locale = lang
@@ -67,7 +72,7 @@ i18n.loadLanguageAsync = async lang => {
   loadedLanguages.push(lang)
   return setI18nLanguage(lang)
 }
-
-i18n.loadLanguageAsync(LOCALE)
+// alert(GET_LOCALE())
+i18n.loadLanguageAsync(GET_LOCALE())
 
 export default i18n

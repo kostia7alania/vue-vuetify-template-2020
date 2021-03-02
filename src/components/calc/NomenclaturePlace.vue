@@ -1,29 +1,63 @@
 <template>
-  <v-container>
-    <v-row justify="center">
-      <div>
+  <v-container fluid>
+    <!-- <v-divider v-if="i" inset /> -->
+    <v-row justify="center" align="center" dense>
+      <v-col cols="12" sm="12" md="2" lg="2" xl="2" align-self="center" class="place">
+        <v-row justify="center" align="center" dense>
+          <v-avatar size="50" class="2v-card--material__avatar">
+            <v-icon v-if="!weight || !length || !width || !height" size="x-large">mdi-package-variant</v-icon>
+            <v-icon v-else size="x-large">mdi-package-variant-closed</v-icon>
+          </v-avatar>
+        </v-row>
+        <v-row justify="center" align="center" dense>Место {{ i + 1 }}</v-row>
+      </v-col>
+      <v-col cols="12" sm="4" md="3">
+        <v-row dense>Вес</v-row>
         <v-row>
-          <v-col cols="2">
-            <!-- eslint-disable-next-line vue/no-mutating-props -->
-            <v-text-field v-model.number="place.weight" type="number" label="Вес" outlined />
-          </v-col>
-          <v-col cols="3">
-            <v-text-field v-model.number="length" type="number" label="Длина" outlined />
-          </v-col>
-          <v-col cols="3">
-            <v-text-field v-model.number="width" type="number" label="Ширина" outlined />
-          </v-col>
-          <v-col cols="3">
-            <v-text-field v-model.number="height" type="number" label="Высота" outlined />
-          </v-col>
-          <v-col cols="1" class="items-center">
-            <v-btn text rounded @click="$emit('delete')">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
+          <v-col>
+            <CommonInput v-model.number="weight" :rules="['req', 'num_pos']" type="number" label="Вес">
+              <template #append>кг</template>
+            </CommonInput>
           </v-col>
         </v-row>
-      </div>
+      </v-col>
+      <v-col cols="12" sm="8" md="7">
+        <v-row dense>Габариты</v-row>
+        <v-row>
+          <v-col cols="12" sm="4">
+            <CommonInput v-model.number="length" :rules="['req', 'num_pos']" type="number" label="Длина">
+              <template #append>см</template>
+              <template #append-outer>x</template>
+            </CommonInput>
+          </v-col>
+          <v-col cols="12" sm="4">
+            <CommonInput v-model.number="width" :rules="['req', 'num_pos']" type="number" label="Ширина">
+              <template #append>см</template>
+              <template #append-outer>x</template>
+            </CommonInput>
+          </v-col>
+          <v-col cols="12" sm="4">
+            <CommonInput v-model.number="height" :rules="['req', 'num_pos']" type="number" label="Высота">
+              <template #append>см</template>
+            </CommonInput>
+          </v-col>
+        </v-row>
+      </v-col>
+      <!-- <v-col align="left">
+        <v-btn v-if="showRemove" text rounded @click="$emit('delete')">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+      </v-col> -->
     </v-row>
+
+    <v-btn v-if="showAdd" rounded text @click="$emit('add')">
+      <v-icon left>mdi-plus</v-icon>
+      Добавить место
+    </v-btn>
+    <v-btn v-if="showRemove" rounded text @click="$emit('delete')">
+      <v-icon left>mdi-delete</v-icon>
+      Удалить место
+    </v-btn>
   </v-container>
 </template>
 
@@ -43,6 +77,18 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    i: {
+      type: Number,
+      default: 0,
+    },
+    showRemove: {
+      type: Boolean,
+      default: false,
+    },
+    showAdd: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     weight: {
@@ -50,9 +96,7 @@ export default {
         return this.place.weight
       },
       set(weight) {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.place.weight = weight
-        // this.$emit('set-place', { ...this.place, weight })
+        this.$emit('input', { ...this.place, weight })
       },
     },
     length: {
@@ -60,9 +104,7 @@ export default {
         return this.place.dimensions.length
       },
       set(length) {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.place.dimensions.length = length
-        // this.$emit('set-place', { ...this.place, dimensions: { ...this.place.dimensions, length } })
+        this.$emit('input', { ...this.place, dimensions: { ...this.place.dimensions, length } })
       },
     },
     width: {
@@ -70,9 +112,7 @@ export default {
         return this.place.dimensions.width
       },
       set(width) {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.place.dimensions.width = width
-        // this.$emit('set-place', { ...this.place, dimensions: { ...this.place.dimensions, width } })
+        this.$emit('input', { ...this.place, dimensions: { ...this.place.dimensions, width } })
       },
     },
     height: {
@@ -80,16 +120,15 @@ export default {
         return this.place.dimensions.height
       },
       set(height) {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.place.dimensions.height = height
-        // this.$emit('set-place', { ...this.place, dimensions: { ...this.place.dimensions, height } })
+        this.$emit('input', { ...this.place, dimensions: { ...this.place.dimensions, height } })
       },
     },
   },
 }
 </script>
+
 <style lang="scss" scoped>
-.items-center {
-  align-items: center;
+.place {
+  min-width: 109px;
 }
 </style>

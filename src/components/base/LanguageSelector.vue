@@ -1,6 +1,5 @@
 <template>
-  <span min-width="0" class="language-selector ">
-    <!-- <b-tooltip
+  <!-- <b-tooltip
       v-for="loc in availableLocales"
       :key="loc"
       :label="$t('locale.loc.' + loc)"
@@ -15,15 +14,14 @@
         <Flag :flag="loc" />
       </span>
     </b-tooltip> -->
-    <v-tooltip bottom>
-      <template #activator="{ on, attrs }">
-        <v-btn min-width="0" color="primary" text v-bind="attrs" v-on="on" @click="nextLocale">
-          <BaseFlag :flag="currentlocale" />
-        </v-btn>
-      </template>
-      <span>{{ $t('lacale.' + currentlocale) }}</span>
-    </v-tooltip>
-  </span>
+  <v-tooltip bottom>
+    <template #activator="{ on, attrs }">
+      <v-btn text rouded min-width="0" v-bind="attrs" v-on="on" @click="nextLocale">
+        <BaseFlag :flag="currentlocale" />
+      </v-btn>
+    </template>
+    <span>{{ $t('lacale.' + currentlocale) }}</span>
+  </v-tooltip>
 </template>
 
 <script>
@@ -94,32 +92,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.language-selector {
-  // display: flex;
-  // align-items: inherit;
-
-  &__item {
-    cursor: pointer;
-    /*transition: 0.3s;
-    // margin-left: 6px;
-    &:hover {
-      transform: scale(1.1);
-    }
-    &:active {
-      transform: scale(0.8);
-    }*/
-    &-current {
-      /*
-      opacity: 0.4;
-      cursor: not-allowed;
-      &:hover,
-      &:active {
-        transform: scale(1);
-      }
-      */
-    }
-  }
-}
-</style>

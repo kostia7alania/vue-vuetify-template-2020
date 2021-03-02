@@ -5,7 +5,9 @@
   "edit-profile": "Редактировать профиль",
   "eforms": "Расширенные формы",
   "avatar": "Админ",
-  "buttons": "Кнопки",
+  "buttons": {
+    "Save": "Сохранить"
+  },
   "calendar": "Календарь",
   "charts": "Диаграммы",
   "components": "Составные части",
@@ -48,13 +50,24 @@
   },
   "title": {
     "main": "Главная страница",
+    "login": "Авторизация",
+    "register": "Регистрация",
     "calc": "Калькулятор",
     "user_profile": "Профиль",
     "notifications": "Оповещения",
     "icons": "Иконки",
     "typography": "Типография",
     "tables_regular": "Таблица",
-    "maps_google": "Гугл-карта"
+    "maps_google": "Гугл-карта",
+    "orders": "Отслеживание заказов",
+    "calc-admin": "Калькулятор (Админ)",
+    "dashboard": "Главная",
+    "users": "Пользователи",
+    "users/add": "Добавить пользователя",
+    "orders/add": "Создание заказа на доставку",
+    "orders/show": "Просмотр заказа на доставку",
+    "orders/edit": "Редактирование заказа на доставку",
+    "planner": "Забор и возврат"
   },
   "menu": {
     "main": "Главная страница",
@@ -64,6 +77,84 @@
     "icons": "Иконки",
     "typography": "Типография",
     "tables_regular": "Таблица",
-    "maps_google": "Гугл-карта"
+    "maps_google": "Гугл-карта",
+    "orders": "Заказы",
+    "calc-admin": "Калькулятор (админ)",
+    "dashboard": "Главная",
+    "users": "Список пользователей",
+    "users/add": "Добавить пользователя",
+    "users-parent": "Пользователи",
+    "orders-parent": "Заказы",
+    "orders/add": "Добавить заказ",
+    "orders/show": "Просмотр заказа",
+    "orders/edit": "Редактирование заказа",
+    "planner": "Забор и возврат"
+  },
+  "calc": {
+    "Source Address": "Адрес источника",
+    "Delivery Type": "Тип отправки",
+    "No Data": "Нет данных",
+    "Destination Address": "Адрес назначения",
+    "Delivery Date": "Дата доставки",
+    "Today": "Cегодня",
+    "Tomorrow": "Завтра",
+    "Delivery Interval": "Интервал",
+    "Places in the Nomenclature": "Мест в номенклатуре",
+    "Declared Order Value": "Объявленная ценность заказа",
+    "Add Services": "Доп. сервисы",
+    "Calculate": "Рассчитать",
+    "No results": "Результатов нет",
+    "Category": "Категория",
+    "Next Day Delivery": "Доставка на следующий день",
+    "First Mile Plus": "Первая Миля Плюс",
+    "First Mile": "Первая Миля",
+    "Delivery from the Store": "Доставка из магазина",
+    "Same Day Delivery": "Доставка в тот же день",
+    "All": "Все",
+    "Delivery Zone": "Зона доставки",
+    "Delivery City": "Город доставки",
+    "Delivery Point": "Пункт доставки",
+    "Delivery Service": "Служба доставки",
+    "Recipient Address": "Адрес получателя"
+  },
+  "notification": {
+    "Please Log In": "Пожалуйста, войдите",
+    "You are offline": "Ты не в сети",
+    "you are not authorized to view this section": "У вас нет прав для просмотра этого раздела",
+    "Something Went Wrong": "Что-то пошло не так",
+    "User Added": "Пользователь добавлен"
+  },
+  "calc-admin": {
+    "Get Table": "Получить таблицу"
+  },
+  "auth": {
+    "Auth": "Вход в личный кабинет",
+    "Login": "Авторизоваться",
+    "Password": "Пароль",
+    "Username": "Имя пользователя",
+    "Name": "Имя",
+    "Surname": "Фамилия",
+    "Patronymic": "Отчество",
+    "Forgot password": "Забыли пароль",
+    "Remembered Password": "Помню пароль",
+    "Password Reset": "Сбросить пароль"
+  },
+  "users": {
+    "Add User": "Добавить пользователя",
+    "Adding User": "Добавление пользователя"
+  },
+  "orders": {
+    "Add Order": "Добавить заказ"
+  },
+  "valid": {
+    "Required field": "Обязательное поле"
+  },
+  "planner": {
+    "Pick-Up Address": "Адрес забора",
+    "Date": "Дата",
+    "Make Plan": "Спланировать"
+  },
+  "retrun": {
+    "Time Interval": "Временной интервал"
   }
 }

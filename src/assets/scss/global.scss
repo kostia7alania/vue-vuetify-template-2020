@@ -1,3 +1,12 @@
+@import './scrollbar';
+
+body {
+  font-family: 'Nominee', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 12px;
+  line-height: 19px;
+}
+
 .isLoading {
   opacity: 0.5;
   filter: blur(1px);
@@ -9,4 +18,48 @@
   background: #ff9900;
   color: #363642;
   text-shadow: none;
+}
+
+// input[type='number'] {
+//   -moz-appearance: textfield;
+// }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+// .page-head {
+//   margin-bottom: 15px;
+//   h2 {
+//     // font-weight: 900;
+//     font-size: 19px;
+//     line-height: 31px;
+//     // color: #425563;
+//     margin-bottom: 0;
+//     text-transform: uppercase;
+//   }
+// }
+
+.fill-fields {
+  font-size: 10px;
+  line-height: 16px;
+  color: #e0119d;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+.section-header {
+  font-size: 1.2em;
+  line-height: 2em;
+  // color:
+  margin-bottom: 0em;
+  margin-top: 0.8em;
+}
+
+h3 {
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+.items-center {
+  display: flex;
+  items-align: center;
 }

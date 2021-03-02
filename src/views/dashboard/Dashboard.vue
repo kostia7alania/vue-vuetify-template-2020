@@ -2,6 +2,10 @@
   <v-container id="dashboard" fluid tag="section">
     <v-row>
       <v-col cols="12" lg="4">
+        <v-city v-model="form.city" label="Город получатель" />
+        <v-street v-model="form.street" :city="form.city" label="Улица" />
+        <v-house v-model="form.house" :city="form.city" :street="form.street" label="Дом" />
+
         <base-material-chart-card
           :data="emailsSubscriptionChart.data"
           :options="emailsSubscriptionChart.options"
@@ -281,6 +285,7 @@ export default {
 
   data() {
     return {
+      form: {},
       dailySalesChart: {
         data: {
           labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],

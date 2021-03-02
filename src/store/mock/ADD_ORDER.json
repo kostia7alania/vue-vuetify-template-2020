@@ -1,0 +1,49 @@
+{
+  "client_id": 1,
+  "client_order_number": "qwerty12345",
+  "warehouse_id": 1,
+  "acquiring": 2,
+  "cash_on_delivery": 40000,
+  "delivery_date": "2021-02-05",
+  "interval_slots": ["9:00 - 13:00"],
+  "places": [
+    {
+      "name": "Телевизор samsung",
+      "price": 40000.0,
+      "quantity": 2,
+      "nomenclatures": [
+        {
+          "weight": 4.3,
+          "length": 50,
+          "width": 50,
+          "height": 50
+        }
+      ]
+    }
+  ],
+  "additional_services": 0,
+  "declared_order_value": 2,
+  "delivery_type": 1,
+  "category_id": 1,
+  "recipient": {
+    "address": {
+      "city": "Москва",
+      "street": "2-я Миусская ул., д. 1",
+      "house": "1",
+      "block": "1",
+      "flat": 1,
+      "entrance": 1,
+      "floor": 1,
+      "is_private_house": false
+    },
+    "coordinates": {
+      "geo_lat": 55.777468,
+      "geo_lon": 37.589153
+    },
+    "firstname": "Archibald",
+    "lastname": "Perero",
+    "patronymic": "Kekovich",
+    "email": "email@email.com",
+    "phone": "89202345489"
+  }
+}

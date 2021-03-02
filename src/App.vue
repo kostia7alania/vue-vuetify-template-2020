@@ -3,21 +3,25 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'App',
   computed: {
     ...mapState('settings', ['IS_DARK']),
-  },
-  watch: {
-    IS_DARK: 'init',
+    ...mapGetters('auth', ['IS_LOGGED_IN']),
   },
   created() {
-    this.init()
+    this.initAuth()
+    this.initTheme()
   },
   methods: {
-    init() {
+    ...mapMutations('auth', ['UNSET_LOGIN']),
+    initAuth() {
+      if (!this.IS_LOGGED_IN) this.UNSET_LOGIN()
+    },
+    initTheme() {
+      this.$vuetify.noDataText = 'Нет данных'
       this.$vuetify.theme.dark = this.IS_DARK
     },
   },

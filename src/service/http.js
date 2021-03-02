@@ -1,45 +1,94 @@
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
+const ACCESS_TOKEN = () => window.vue.$store.state.auth.LOGIN.token
+const LOGIN_REFRESH = () => window.vue.$store.dispatch('auth/LOGIN_REFRESH')
 
-const instance = axios.create({
-  // headers: { withCredentials: 'true' },
-})
+// axios.defaults.withCredentials = true
 
-// instance.interceptors.response.use(
-//   response => {
-//     const { vue } = window
-//     // Any status code that lie within the range of 2xx cause this function to trigger
-//     // Do something with response data
-//     const redirectToMain = `<html><head><script type="text/javascript">if(window.parent) {window.parent.location.assign('/portal-ui'); } else {window.location.assign('/portal-ui');}</script></head><body></body></html>`
-//     if (response?.data === redirectToMain /* && vue.$route.meta.withoutAuth */) {
-//       vue.$router.push({ name: 'main' })
-//     }
-//     return response
-//   },
-//   async err => {
-//     const { vue } = window
-//     // Any status codes that falls outside the range of 2xx cause this function to trigger
-//     // Do something with response error
-//     if (err.response) {
-//       if (
-//         [401, 403].includes(err.response.status) &&
-//         !vue.$route?.meta?.middleware?.some(e => e.toString().match('guest'))
-//       ) {
-//         if (['PERMISSION_DENIED', 'INSUFFICIENT_CREDENTIALS'].includes(err.response?.data?.type)) {
-//           console.log('[RDP error] logout skipping', err.response)
-//           return Promise.reject(err)
-//         }
-//         await vue.$store.dispatch('auth/LOGOUT')
-//         const redirect = vue.$router.currentRoute.fullPath
-//         console.log('[HTTP]', redirect, redirect)
-//         vue.$router.push({ name: 'login', meta: { redirect }, query: { redirect } })
-//       }
-//     }
-//     return Promise.reject(err)
-//   }
-// )
+const options = {
+  // baseURL: 'BASE_API_URL',
+  timeout: 20000,
+  headers: {
+    // withCredentials: 'true',
+    // Authorization: 'bearer ',
+    // 'Content-Type': 'application/json',
+  },
+}
 
-export const { get: GET, post: POST } = instance
+const setAndGetAuthHeaders = () => {
+  options.headers = {
+    ...options.headers,
+    Authorization: `Bearer ${ACCESS_TOKEN()}`,
+  }
+  return options.headers
+}
 
-export default instance
+const axiosApiInstance = axios.create(options)
+
+// Request interceptor for API calls
+axiosApiInstance.interceptors.request.use(
+  async config => {
+    // eslint-disable-next-line no-param-reassign
+    config.headers = setAndGetAuthHeaders()
+    return config
+  },
+  error => Promise.reject(error)
+)
+
+const logout = async req => {
+  const { vue } = window
+
+  await vue.$store.dispatch('auth/LOGOUT')
+  const redirect = vue.$router.currentRoute.name
+  if (vue.$route.name === 'login') console.log('already in login form')
+  else vue.$router.push({ name: 'login', query: { redirect } })
+  return req
+}
+// Response interceptor for API calls
+axiosApiInstance.interceptors.response.use(
+  response => {
+    return response
+  },
+  async error => {
+    const originalRequest = error.config
+    const { status } = error.response || {}
+
+    if (status === 403) {
+      await logout()
+      return Promise.reject(error)
+    }
+
+    if (status === 401) {
+      if (originalRequest._retry || originalRequest.url.endsWith('token/refresh'))
+        return Promise.reject(await logout(error))
+      originalRequest._retry = true
+      const refreshedToken = await LOGIN_REFRESH()
+      console.log('[http] New Token: ', refreshedToken)
+      // axiosApiInstance.headers.common.Authorization = `Bearer ${refreshedToken}`
+      axiosApiInstance.headers = setAndGetAuthHeaders()
+      originalRequest.headers = setAndGetAuthHeaders()
+      console.log('[http] Original Request: ', originalRequest)
+
+      return axiosApiInstance(originalRequest)
+    }
+    const { vue } = window
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    let isGuest
+    const middleware = vue?.$route?.meta?.middleware?.attach || vue?.$route?.meta?.middleware
+    if (middleware) isGuest = middleware?.some(e => e.toString().match('guest'))
+    if ([401, 403].includes(status) && !isGuest) {
+      await logout()
+    }
+    return Promise.reject(error)
+  }
+)
+
+export const { get: GET, post: POST, delete: DELETE } = axiosApiInstance
+
+export const API_ERP = process.env.VUE_APP_API_PROXY_ERP
+export const API_CALC = process.env.VUE_APP_API_PROXY_CALC
+export const API_AUTH = process.env.VUE_APP_API_PROXY_AUTH
+export const API_ORDERS = process.env.VUE_APP_API_PROXY_ORDERS
+
+export default axios

@@ -1,21 +1,33 @@
-const BACK = process.env.VUE_APP_API // ('10.0.5.154')
+// const API_PROXY = process.env.VUE_APP_API_PROXY // ('10.0.5.154')
+// const API_PROXY_CALC = process.env.VUE_APP_API_PROXY_CALC // ('10.0.5.154')
+// const API_PROXY_ORDERS = process.env.VUE_APP_API_PROXY_ORDERS // ('10.0.5.154')
 
 const configDev = {
   devServer: {
-    disableHostCheck: true,
-    proxy: {
-      // all
+    // proxy: {
+    /*
+     // all
       '^/api/(.*)$': {
-        target: BACK,
+        // @TODO допилить
+        target: API_PROXY,
       },
-      // 'wss://(.*)/wss': {
-      //   target: `wss://${ip}/wss`,
-      //   changeOrigin: true,
-      //   ws: true,
-      //   onOpen,
-      //   onClose,
-      // },
-    },
+      '^/api(.*)$': {
+        // @TODO допилить
+        target: API_PROXY_CALC,
+      },
+      '^/api(.*)$.': {
+        // @TODO допилить
+        target: API_PROXY_ORDERS,
+      },
+      */
+    // 'wss://(.*)/wss': {
+    //   target: `wss://${ip}/wss`,
+    //   changeOrigin: true,
+    //   ws: true,
+    //   onOpen,
+    //   onClose,
+    // },
+    // },
     overlay: {
       // warnings: true,
       errors: true,
